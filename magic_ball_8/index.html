@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HADİ DENEYELİM</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            margin-top: 150px;
+        }
+
+        .ball {
+            width: 200px;
+            height: 200px;
+            background-color: #000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin: 50px auto;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            background: radial-gradient(circle, #444, #000);
+            border: 1px solid #fff;
+            transition: transform 0.5s ease;
+        }
+
+        .ball::before {
+            content: "8";
+            font-size: 70px;
+            font-weight: bold;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ball.answered::before {
+            display: none;
+        }
+
+        .ball::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #333, rgba(255, 255, 255, 0));
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1; 
+        }
+
+        .answer {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            width: 80%;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 20px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            display: block;
+            margin: 20px auto;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 300px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body id="body">
+    <h1>SİHİRLİ 8 TOP</h1>
+    <div class="ball" id="ball-container">
+        <div class="answer" id="ball"></div>
+    </div>
+    <input type="text" id="question" placeholder="Sorunuzu yazın...">
+    <button onclick="shakeBall()">CEVABI GÖR</button>
+    <script>
+        const answers = {
+            "Evet": "#002e23",
+            "Hayır": "#ffd1dc",
+            "Belki": "#00bace",
+            "Daha sonra sor": "#fcacff",
+            "Kesinlikle": "#ff959c",
+            "Sanmıyorum": "#910031",
+            "Kesinlikle evet": "#aab2ff",
+            "Emin değilim": "#0081fe",
+            "Tekrar dene": "#f967ff",
+            "Çok olası": "#3e82ff",
+            "Şüpheli": "#419cff",
+            "Muhtemelen": "#fc245c",
+            "Olabilir": "#ac84fd",
+            "Hayal kırıklığına uğrayabilirsin": "#ffa467",
+            "Harika bir fikir": "#74ff8f",
+            "Bunu yapma": "#9a49ff",
+            "Şansın yüksek": "#f500c2",
+            "İmkansız değil": "#fda1ff",
+            "Görmek için bekle": "#da82ff",
+            "Biraz daha düşün": "#e500fb",
+            "Daha net bir cevap yok": "#dcb5ff",
+            "Başarı şansın yüksek": "#00536b",
+            "Bunu unut": "#aca2ff",
+            "Şimdi uygun zaman değil": "#ff74b9",
+            "Harika bir sonuç bekleyebilirsin": "#9374ff",
+            "Önce başka birine danış": "#00c18b",
+            "Karar senin": "#ff779a",
+            "Bence evet": "#8dffc2",
+            "Bence hayır": "#ffc20f",
+            "Bu konuda emin değilim": "#ff9292"
+        };
+        
+        function shakeBall() {
+            const question = document.getElementById("question").value.trim();
+            if (question === "") {
+                alert("Lütfen bir soru girin!");
+                return;
+            }
+            
+            const ball = document.getElementById("ball");
+            const ballContainer = document.getElementById("ball-container");
+            const body = document.getElementById("body");
+            const answerKeys = Object.keys(answers);
+            const randomIndex = Math.floor(Math.random() * answerKeys.length);
+            const selectedAnswer = answerKeys[randomIndex];
+           
+            ballContainer.classList.add("answered");
+            ball.textContent = selectedAnswer;
+            body.style.backgroundColor = answers[selectedAnswer];
+
+            
+            ballContainer.style.transform = "translate(0, -10px)";
+            setTimeout(() => {
+                ballContainer.style.transform = "translate(0, 10px)";
+            }, 100);
+            setTimeout(() => {
+                ballContainer.style.transform = "translate(0, -10px)";
+            }, 200);
+            setTimeout(() => {
+                ballContainer.style.transform = "translate(0, 0)";
+            }, 300);
+        }
+    </script>
+</body>
+</html>
